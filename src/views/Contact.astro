@@ -1,0 +1,131 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { home } from '../data/home';
+import { initiatives } from '../data/initiatives';
+import { site } from '../data/site';
+import { tr, useTranslations, type Lang } from '../i18n';
+import photo from '../assets/photos/tz-mhh-workshop.jpg';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const copy = {
+  text: {
+    en: 'Have questions, want to partner with us or ready to make a difference? We would love to hear from you.',
+    de: 'Du hast Fragen, möchtest Partner werden oder dich engagieren? Wir freuen uns, von dir zu hören.',
+  },
+  reasons: [
+    { subject: 'Partnership', label: { en: 'Partner with us', de: 'Partner werden' } },
+    { subject: 'Corporate sponsorship', label: { en: 'Sponsor as a company', de: 'Als Unternehmen sponsern' } },
+    { subject: 'Press', label: { en: 'Press & media', de: 'Presse & Medien' } },
+  ],
+};
+
+const mailto = (subject: string) => `mailto:${site.email}?subject=${encodeURIComponent(`SIMpowering – ${subject}`)}`;
+---
+
+<Layout lang={lang} title={t('nav.contact')} description={tr(copy.text, lang)}>
+  <section class="section">
+    <div class="container contact">
+      <div>
+        <h1>{t('contact.title')}</h1>
+        <p class="lead">{tr(copy.text, lang)}</p>
+
+        <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+
+        <ul class="reasons">
+          {
+            copy.reasons.map((r) => (
+              <li>
+                <a href={mailto(r.subject)}>{tr(r.label, lang)} →</a>
+              </li>
+            ))
+          }
+          {
+            initiatives.map((i) => (
+              <li>
+                <a href={mailto(tr(i.country, 'en'))}>
+                  {tr(i.country, lang)} · {tr(i.region, lang)} →
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h2 class="follow">{t('contact.follow')}</h2>
+        <SocialLinks variant="dark" />
+      </div>
+      <div>
+        <Image src={photo} alt="" widths={[480, 800]} sizes="(max-width: 900px) 100vw, 480px" />
+        <p class="muted about">{tr(home.about.text, lang)}</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+  }
+  .lead {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 540px;
+  }
+  .email {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3.4vw, 2rem);
+    color: var(--pink-600);
+    margin: 12px 0 28px;
+    word-break: break-word;
+  }
+  .reasons {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 36px;
+    display: grid;
+    gap: 10px;
+    max-width: 460px;
+  }
+  .reasons a {
+    display: block;
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .reasons a:hover {
+    border-color: var(--teal-700);
+  }
+  .follow {
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+  }
+  img {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+  }
+  .about {
+    margin-top: 20px;
+    font-size: 0.98rem;
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { localizePath, useTranslations, type Lang } from '../i18n';
+
+const lang: Lang = Astro.url.pathname.startsWith('/de/') ? 'de' : 'en';
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} title={t('notFound.title')} description={t('notFound.text')}>
+  <section class="section">
+    <div class="container" style="text-align:center">
+      <h1>404</h1>
+      <p class="muted">{t('notFound.text')}</p>
+      <a class="btn btn--primary" href={localizePath('/', lang)}>{t('notFound.back')}</a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import type { Initiative } from '../data/initiatives';
+import { localizePath, tr, useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  initiative: Initiative;
+  lang: Lang;
+}
+
+const { initiative: i, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<a class="initiative-card" href={localizePath(`/${i.slug}`, lang)} style={`--accent:${i.accent}`}>
+  <div class="media">
+    <Image src={i.heroImage} alt={tr(i.heroAlt, lang)} widths={[480, 800]} sizes="(max-width: 900px) 100vw, 560px" />
+  </div>
+  <div class="body">
+    <div class="eyebrow">{t(`initiative.status.${i.status}`)} · {tr(i.region, lang)} · {i.years}</div>
+    <h3>{tr(i.country, lang)}</h3>
+    <p class="tagline">{tr(i.tagline, lang)}</p>
+    <div class="foot">
+      <div class="highlight">
+        <strong>{i.highlight.value}</strong>
+        <span>{tr(i.highlight.label, lang)}</span>
+      </div>
+      <span class="more">{t('cta.explore')} →</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .initiative-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .initiative-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+  .media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .body {
+    padding: 26px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 4px;
+  }
+  .tagline {
+    color: var(--muted);
+  }
+  .foot {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .highlight strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--teal-900);
+  }
+  .highlight span {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .more {
+    font-weight: 600;
+    color: var(--teal-900);
+    white-space: nowrap;
+  }
+  .initiative-card:hover .more {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+</style>

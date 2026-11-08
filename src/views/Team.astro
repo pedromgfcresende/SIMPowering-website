@@ -1,0 +1,144 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import { initiatives } from '../data/initiatives';
+import { team } from '../data/team';
+import { localizePath, tr, useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join('');
+---
+
+<Layout lang={lang} title={t('nav.team')} description={tr(team.text, lang)}>
+  <section class="hero">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">{t('nav.team')}</div>
+        <h1>{tr(team.title, lang)}</h1>
+        <p>{tr(team.text, lang)}</p>
+      </div>
+    </div>
+  </section>
+
+  {
+    initiatives.map((i, n) => {
+      const members = team.members.filter((m) => m.initiative === i.slug);
+      return (
+        <section id={i.slug} class:list={['section', { 'section--tint': n % 2 === 0 }]}>
+          <div class="container">
+            <div class="team-head">
+              <div>
+                <div class="eyebrow">
+                  {tr(i.region, lang)} · {i.years}
+                </div>
+                <h2>Team {tr(i.country, lang)}</h2>
+              </div>
+              <a class="link" href={localizePath(`/${i.slug}`, lang)}>
+                {tr(i.country, lang)} →
+              </a>
+            </div>
+            {members.length > 0 ? (
+              <ul class="members">
+                {members.map((m) => (
+                  <li class="member">
+                    {m.photo ? (
+                      <Image src={m.photo} alt={m.name} widths={[320, 520]} sizes="260px" />
+                    ) : (
+                      <span class="avatar" aria-hidden="true">
+                        {initials(m.name)}
+                      </span>
+                    )}
+                    <h3>{m.name}</h3>
+                    <p>{tr(m.role, lang)}</p>
+                    {m.linkedin && (
+                      <a href={m.linkedin} target="_blank" rel="noopener">
+                        LinkedIn
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="empty">{t('team.empty')}</p>
+            )}
+          </div>
+        </section>
+      );
+    })
+  }
+</Layout>
+
+<style>
+  .hero {
+    padding: clamp(40px, 7vw, 88px) 0 clamp(16px, 3vw, 32px);
+  }
+  .hero .section-head {
+    margin-bottom: 0;
+  }
+  .team-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .team-head h2 {
+    margin: 0;
+  }
+  .link {
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .members {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
+    gap: 32px 24px;
+  }
+  .member img,
+  .avatar {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: 14px;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    background: var(--mint-100);
+    color: var(--teal-700);
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+  }
+  .member h3 {
+    font-size: 1.15rem;
+    margin: 0 0 2px;
+  }
+  .member p {
+    margin: 0 0 4px;
+    color: var(--muted);
+  }
+  .member a {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .empty {
+    color: var(--muted);
+  }
+</style>

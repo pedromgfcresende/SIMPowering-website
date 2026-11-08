@@ -1,0 +1,124 @@
+---
+import { Image } from 'astro:assets';
+import hsg from '../assets/logos/hsg.svg';
+import simagination from '../assets/logos/simagination.png';
+import { initiatives } from '../data/initiatives';
+import { site } from '../data/site';
+import { localizePath, tr, useTranslations, type Lang } from '../i18n';
+import SocialLinks from './SocialLinks.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">SIMpowering</div>
+      <p class="footer-tag">{t('footer.tag')}</p>
+      <div class="footer-logos">
+        <Image src={hsg} alt="University of St. Gallen (HSG)" height={34} />
+        <Image src={simagination} alt="SIMagination Challenge" height={34} />
+      </div>
+    </div>
+    <nav aria-label={t('nav.initiatives')}>
+      <h2 class="footer-head">{t('nav.initiatives')}</h2>
+      <ul>
+        {
+          initiatives.map((i) => (
+            <li>
+              <a href={localizePath(`/${i.slug}`, lang)}>
+                {tr(i.country, lang)} · {tr(i.region, lang)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div>
+      <h2 class="footer-head">{t('nav.contact')}</h2>
+      <ul>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a href={localizePath('/team', lang)}>{t('nav.team')}</a></li>
+      </ul>
+      <SocialLinks />
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    © {year} SIMpowering. {t('footer.rights')}
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--teal-900);
+    color: #c9dcdf;
+    padding: 64px 0 28px;
+    font-size: 0.95rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 760px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: #fff;
+  }
+  .footer-tag {
+    margin-top: 4px;
+  }
+  .footer-logos {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .footer-logos img {
+    width: auto;
+    height: 34px;
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    box-sizing: content-box;
+  }
+  .footer-head {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: grid;
+    gap: 6px;
+  }
+  a {
+    color: #c9dcdf;
+  }
+  a:hover {
+    color: #fff;
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 0.85rem;
+    color: #8fb0b5;
+  }
+</style>

@@ -1,0 +1,18 @@
+# build output
+dist/
+.astro/
+.vercel/
+
+# dependencies
+node_modules/
+
+# environment
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.idea/
+
+# internal grant paperwork — not part of the public website
+grant/

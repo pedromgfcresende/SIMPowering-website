@@ -1,0 +1,12 @@
+---
+import InitiativePage from '../views/InitiativePage.astro';
+import { initiatives, type Initiative } from '../data/initiatives';
+
+export function getStaticPaths() {
+  return initiatives.map((initiative) => ({ params: { initiative: initiative.slug }, props: { initiative } }));
+}
+
+const { initiative } = Astro.props as { initiative: Initiative };
+---
+
+<InitiativePage lang="en" initiative={initiative} />

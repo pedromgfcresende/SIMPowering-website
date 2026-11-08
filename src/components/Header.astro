@@ -1,0 +1,257 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logos/simpowering.png';
+import { initiatives } from '../data/initiatives';
+import { languages, localizePath, stripLang, tr, useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  donateHref?: string;
+}
+
+const { lang, donateHref } = Astro.props;
+const t = useTranslations(lang);
+const basePath = stripLang(Astro.url.pathname).replace(/\/$/, '') || '/';
+const isCurrent = (path: string) => basePath === path;
+
+const links = [
+  ...initiatives.map((i) => ({ href: `/${i.slug}`, label: tr(i.country, lang) })),
+  { href: '/team', label: t('nav.team') },
+  { href: '/contact', label: t('nav.contact') },
+];
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="brand" href={localizePath('/', lang)} aria-label="SIMpowering home">
+      <Image src={logo} alt="" width={44} height={44} loading="eager" />
+      <span class="brand-name">SIMpowering</span>
+    </a>
+
+    <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false">
+      <span class="visually-hidden">{t('nav.menu')}</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </button>
+
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul class="nav-links">
+        {
+          links.map((l) => (
+            <li>
+              <a
+                href={localizePath(l.href, lang)}
+                aria-current={isCurrent(l.href) ? 'page' : undefined}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label={t('nav.language')}>
+          {
+            Object.entries(languages).map(([code, name]) => (
+              <a
+                href={localizePath(basePath, code as Lang)}
+                hreflang={code}
+                lang={code}
+                title={name}
+                aria-current={code === lang ? 'true' : undefined}
+              >
+                {code.toUpperCase()}
+              </a>
+            ))
+          }
+        </div>
+        <a class="btn btn--primary" href={donateHref ?? localizePath('/#donate', lang)}>{t('nav.donate')}</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.getElementById('site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    nav?.classList.toggle('is-open', !open);
+  });
+  nav?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('is-open');
+    }),
+  );
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(251, 248, 242, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 72px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--teal-900);
+    flex-shrink: 0;
+  }
+  .brand img {
+    width: 40px;
+    height: 40px;
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.35rem;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .nav-links a:hover {
+    background: rgba(18, 56, 68, 0.06);
+  }
+  .nav-links a[aria-current='page'] {
+    background: var(--teal-900);
+    color: #fff;
+  }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .nav-actions .btn {
+    padding: 10px 20px;
+  }
+  .lang-switch {
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+    background: var(--paper);
+  }
+  .lang-switch a {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .lang-switch a[aria-current='true'] {
+    background: var(--teal-900);
+    color: #fff;
+  }
+
+  .nav-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+  }
+  .nav-toggle-bars,
+  .nav-toggle-bars::before,
+  .nav-toggle-bars::after {
+    position: absolute;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background: var(--teal-900);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: transform 0.2s ease;
+  }
+  .nav-toggle-bars {
+    top: 50%;
+  }
+  .nav-toggle-bars::before,
+  .nav-toggle-bars::after {
+    content: '';
+  }
+  .nav-toggle-bars::before {
+    top: -6px;
+  }
+  .nav-toggle-bars::after {
+    top: 6px;
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bars {
+    background: transparent;
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bars::before {
+    transform: translate(-50%, 6px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bars::after {
+    transform: translate(-50%, -6px) rotate(-45deg);
+  }
+
+  @media (max-width: 900px) {
+    .nav-toggle {
+      display: block;
+    }
+    .nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+      padding: 16px;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow-md);
+    }
+    .nav.is-open {
+      display: flex;
+    }
+    .nav-links {
+      flex-direction: column;
+    }
+    .nav-links a {
+      padding: 12px 14px;
+      font-size: 1.1rem;
+    }
+    .nav-actions {
+      justify-content: space-between;
+    }
+  }
+</style>

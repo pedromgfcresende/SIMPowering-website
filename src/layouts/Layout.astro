@@ -1,0 +1,50 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { languages, localizePath, stripLang, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Donate link for the header button; defaults to the donation chooser on the home page */
+  donateHref?: string;
+}
+
+const { lang, title, description, donateHref } = Astro.props;
+const basePath = stripLang(Astro.url.pathname);
+const canonical = new URL(localizePath(basePath, lang), Astro.site);
+const fullTitle = title === 'SIMpowering' ? title : `${title} · SIMpowering`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="canonical" href={canonical} />
+    {
+      Object.keys(languages).map((l) => (
+        <link rel="alternate" hreflang={l} href={new URL(localizePath(basePath, l as Lang), Astro.site)} />
+      ))
+    }
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og-image.jpg', Astro.site)} />
+    <meta name="theme-color" content="#123844" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{lang === 'de' ? 'Zum Inhalt springen' : 'Skip to content'}</a>
+    <Header lang={lang} donateHref={donateHref} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>
