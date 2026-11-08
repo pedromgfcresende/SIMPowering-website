@@ -62,40 +62,8 @@ export const kenya: Initiative = {
       de: 'Wir verbinden das lokale Vertrauen von Power of Pads mit dem schulbasierten Modell, das sich in Tansania bewährt hat.',
     },
     list: [
-      {
-        name: 'Power of Pads',
-        role: { en: 'Implementation partner', de: 'Umsetzungspartner' },
-        description: {
-          en: 'UK charity (no. 1139288) that has provided reusable pads to 2,435 girls in 20 schools in Busia and Kakamega since 2021.',
-          de: 'Britische Organisation (Nr. 1139288), die seit 2021 2.435 Mädchen an 20 Schulen in Busia und Kakamega mit wiederverwendbaren Binden versorgt hat.',
-        },
-      },
-      {
-        name: { en: 'Busia women’s group', de: 'Frauengruppe Busia' },
-        role: { en: 'Local mentors', de: 'Lokale Mentorinnen' },
-        description: {
-          en: 'Experienced pad makers who will train and mentor the hub school.',
-          de: 'Erfahrene Herstellerinnen von Binden, die die Hub-Schule schulen und begleiten.',
-        },
-      },
+      { name: 'Power of Pads' },
+      { name: { en: 'Busia women’s group', de: 'Frauengruppe Busia' } },
     ],
   },
-
-  donationTiers: [
-    {
-      amount: '€7',
-      label: { en: 'Pad pack for one girl', de: 'Bindenpaket für ein Mädchen' },
-      description: { en: 'Five reusable pads, enough for a year or more.', de: 'Fünf wiederverwendbare Binden für ein Jahr oder länger.' },
-    },
-    {
-      amount: '€180',
-      label: { en: 'Sewing machine', de: 'Nähmaschine' },
-      description: { en: 'Stays at the hub school for years of production.', de: 'Bleibt jahrelang an der Hub-Schule im Einsatz.' },
-    },
-    {
-      amount: '€270',
-      label: { en: 'Production training', de: 'Produktionsschulung' },
-      description: { en: 'Two days that make the community independent.', de: 'Zwei Tage, die die Gemeinde unabhängig machen.' },
-    },
-  ],
 };

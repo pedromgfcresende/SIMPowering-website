@@ -36,7 +36,7 @@ All text lives in `src/data/`. Every text has an `en` and a `de` version (German
 | `src/data/team.ts` | Team members per initiative (photos go in `src/assets/team/`) |
 | `src/i18n/index.ts` | Small interface labels (buttons, menu) |
 
-Every section of an initiative page (`context`, `impact`, `gallery`, `partners`, `donationTiers`) is optional. Leave one out and it disappears from the page.
+Every section of an initiative page (`context`, `impact`, `gallery`, `partners`) is optional. Leave one out and it disappears from the page.
 
 ### Adding a new country
 
@@ -54,6 +54,7 @@ Put photos in `src/assets/photos/` and `import` them in the data file. Astro res
 - [ ] Kenya donation link: set `donateUrl` in `kenya.ts` (until then the page shows an email button)
 - [ ] Kenya photos: replace the placeholder `heroImage` in `kenya.ts`
 - [ ] Team Kenya and Team Tanzania in `src/data/team.ts`
+- [ ] Partner logos for Power of Pads, the Busia women's group and the two Mwanza schools (put them in `src/assets/logos/` and add `logo:` to the partner; until then the name is shown)
 
 ## Deploying on Vercel
 

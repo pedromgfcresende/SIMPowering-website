@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import StatGrid from '../components/StatGrid.astro';
-import BarCharts from '../components/BarCharts.astro';
 import Partners from '../components/Partners.astro';
 import DonatePanel from '../components/DonatePanel.astro';
 import InitiativeCard from '../components/InitiativeCard.astro';
@@ -72,11 +71,6 @@ const country = tr(i.country, lang);
               <p>{tr(i.impact.text, lang)}</p>
             </div>
             <StatGrid stats={i.impact.stats} lang={lang} />
-            {i.impact.charts && (
-              <div class="charts">
-                <BarCharts charts={i.impact.charts} lang={lang} />
-              </div>
-            )}
           </div>
         </section>
       )
@@ -172,9 +166,6 @@ const country = tr(i.country, lang);
     margin-top: 24px;
     font-size: 0.85rem;
     color: #8fb0b5;
-  }
-  .charts {
-    margin-top: 32px;
   }
   .gallery {
     display: grid;

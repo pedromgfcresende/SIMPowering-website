@@ -6,27 +6,11 @@ export type Stat = {
   label: Localized;
 };
 
-export type BarChart = {
-  title: Localized;
-  tag: Localized;
-  caption: Localized;
-  unit?: string;
-  bars: { label: Localized; value: number }[];
-};
-
 export type Partner = {
-  /** Proper names can stay a plain string */
+  /** Proper names can stay a plain string; used as alt text, or shown as text when there is no logo */
   name: string | Localized;
-  role: Localized;
-  description?: Localized;
   logo?: ImageMetadata;
   url?: string;
-};
-
-export type DonationTier = {
-  amount: string;
-  label: Localized;
-  description: Localized;
 };
 
 export type Initiative = {
@@ -61,7 +45,6 @@ export type Initiative = {
     title: Localized;
     text: Localized;
     stats: Stat[];
-    charts?: BarChart[];
   };
 
   gallery?: { image: ImageMetadata; alt: Localized }[];
@@ -71,5 +54,4 @@ export type Initiative = {
     list: Partner[];
   };
 
-  donationTiers?: DonationTier[];
 };

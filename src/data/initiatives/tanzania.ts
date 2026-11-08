@@ -49,49 +49,6 @@ export const tanzania: Initiative = {
       { value: '90%', label: { en: 'machines still running after a year', de: 'Maschinen laufen nach einem Jahr noch' } },
       { value: 'CHF 5k', label: { en: 'raised and spent locally', de: 'gesammelt und vor Ort investiert' } },
     ],
-    charts: [
-      {
-        title: { en: 'Machine sustainability', de: 'Nachhaltigkeit der Maschinen' },
-        tag: { en: 'Igoma C', de: 'Igoma C' },
-        caption: {
-          en: '9 of 10 machines fully operational; the tenth was being repaired with local spare parts.',
-          de: '9 von 10 Maschinen voll funktionsfähig; die zehnte wurde mit lokalen Ersatzteilen repariert.',
-        },
-        bars: [
-          { label: { en: 'Working', de: 'Funktioniert' }, value: 9 },
-          { label: { en: 'In repair', de: 'In Reparatur' }, value: 1 },
-          { label: { en: 'Broken', de: 'Defekt' }, value: 0 },
-        ],
-      },
-      {
-        title: { en: 'Student knowledge', de: 'Wissen der Schüler:innen' },
-        tag: { en: 'Post-workshop recall', de: 'Nach dem Workshop' },
-        caption: {
-          en: 'High retention of cycle phases and hygiene practices.',
-          de: 'Zyklusphasen und Hygienepraktiken blieben gut im Gedächtnis.',
-        },
-        unit: '%',
-        bars: [
-          { label: { en: 'Cycle', de: 'Zyklus' }, value: 85 },
-          { label: { en: 'Hygiene', de: 'Hygiene' }, value: 92 },
-          { label: { en: 'First aid', de: 'Erste Hilfe' }, value: 78 },
-          { label: { en: 'Careers', de: 'Berufe' }, value: 88 },
-        ],
-      },
-      {
-        title: { en: 'The economic hurdle', de: 'Die wirtschaftliche Hürde' },
-        tag: { en: 'Why we need you', de: 'Warum wir dich brauchen' },
-        caption: {
-          en: 'One sewing machine costs about a full median monthly wage (EUR, 2025).',
-          de: 'Eine Nähmaschine kostet etwa einen mittleren Monatslohn (EUR, 2025).',
-        },
-        unit: '€',
-        bars: [
-          { label: { en: 'Monthly wage', de: 'Monatslohn' }, value: 132 },
-          { label: { en: 'Machine', de: 'Maschine' }, value: 129 },
-        ],
-      },
-    ],
   },
 
   gallery: [
@@ -109,42 +66,10 @@ export const tanzania: Initiative = {
       de: 'Unsere Arbeit in Mwanza ist nur dank engagierter lokaler und internationaler Partner möglich.',
     },
     list: [
-      {
-        name: 'A Bleistift FOR EVERYONE',
-        role: { en: 'Implementation partner', de: 'Umsetzungspartner' },
-        logo: bleistift,
-      },
-      {
-        name: 'Igoma C Primary School',
-        role: { en: 'Partner school', de: 'Partnerschule' },
-      },
-      {
-        name: 'Shamaliwa Secondary School',
-        role: { en: 'Partner school', de: 'Partnerschule' },
-      },
-      {
-        name: 'Eduholic',
-        role: { en: 'Partner', de: 'Partner' },
-        logo: eduholic,
-      },
+      { name: 'A Bleistift FOR EVERYONE', logo: bleistift },
+      { name: 'Igoma C Primary School' },
+      { name: 'Shamaliwa Secondary School' },
+      { name: 'Eduholic', logo: eduholic },
     ],
   },
-
-  donationTiers: [
-    {
-      amount: '€40',
-      label: { en: 'Classroom material set', de: 'Materialset für eine Klasse' },
-      description: { en: 'Fabric and supplies for a whole class.', de: 'Stoff und Material für eine ganze Klasse.' },
-    },
-    {
-      amount: '€130',
-      label: { en: 'Sewing machine', de: 'Nähmaschine' },
-      description: { en: 'A durable asset that stays with the school.', de: 'Eine langlebige Investition, die an der Schule bleibt.' },
-    },
-    {
-      amount: '€2,000',
-      label: { en: 'Full workshop', de: 'Kompletter Workshop' },
-      description: { en: 'Machines, fabrics and trainers for one school.', de: 'Maschinen, Stoffe und Ausbilder:innen für eine Schule.' },
-    },
-  ],
 };

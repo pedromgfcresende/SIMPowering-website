@@ -10,110 +10,43 @@ interface Props {
 
 const { initiative: i, lang } = Astro.props;
 const t = useTranslations(lang);
-const tiers = i.donationTiers ?? [];
 ---
 
 <div class="donate">
-  <div class="donate-copy">
-    <h2>{t('donate.title')}</h2>
-    <p>{t('donate.sub')}</p>
-    {
-      i.donateUrl ? (
-        <a class="btn btn--primary btn--big" href={i.donateUrl} target="_blank" rel="noopener">
-          {t('cta.donate')}
-        </a>
-      ) : (
-        <>
-          <p class="note">{t('donate.noLink')}</p>
-          <a
-            class="btn btn--primary btn--big"
-            href={`mailto:${site.email}?subject=${encodeURIComponent(`Donation – ${tr(i.country, 'en')}`)}`}
-          >
-            {t('cta.email')}
-          </a>
-        </>
-      )
-    }
-  </div>
-
+  <h2>{t('donate.title')}</h2>
+  <p>{t('donate.sub')}</p>
   {
-    tiers.length > 0 && (
-      <dl class="tiers">
-        {tiers.map((tier) => (
-          <div class="tier">
-            <dt class="amount">{tier.amount}</dt>
-            <dd>
-              <strong>{tr(tier.label, lang)}</strong>
-              <span>{tr(tier.description, lang)}</span>
-            </dd>
-          </div>
-        ))}
-      </dl>
+    i.donateUrl ? (
+      <a class="btn btn--primary btn--big" href={i.donateUrl} target="_blank" rel="noopener">
+        {t('cta.donate')}
+      </a>
+    ) : (
+      <>
+        <p class="note">{t('donate.noLink')}</p>
+        <a
+          class="btn btn--primary btn--big"
+          href={`mailto:${site.email}?subject=${encodeURIComponent(`Donation – ${tr(i.country, 'en')}`)}`}
+        >
+          {t('cta.email')}
+        </a>
+      </>
     )
   }
 </div>
 
 <style>
   .donate {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 56px;
-    align-items: center;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
   }
-  @media (max-width: 860px) {
-    .donate {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-  }
-  .donate-copy p {
+  p {
     color: var(--muted);
     font-size: 1.1rem;
     margin-bottom: 28px;
   }
-  .donate-copy .note {
+  .note {
     font-size: 1rem;
     margin-bottom: 20px;
-  }
-  .tiers {
-    margin: 0;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-  }
-  .tier {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 20px;
-    align-items: baseline;
-    padding: 22px 26px;
-  }
-  .tier + .tier {
-    border-top: 1px solid var(--line);
-  }
-  .amount {
-    font-family: var(--font-display);
-    font-size: 1.9rem;
-    font-weight: 600;
-    color: var(--teal-900);
-    font-variant-numeric: tabular-nums;
-  }
-  dd {
-    margin: 0;
-  }
-  dd strong {
-    display: block;
-    font-weight: 600;
-  }
-  dd span {
-    color: var(--muted);
-    font-size: 0.97rem;
-  }
-  @media (max-width: 480px) {
-    .tier {
-      grid-template-columns: 1fr;
-      gap: 4px;
-      padding: 18px 20px;
-    }
   }
 </style>

@@ -56,8 +56,8 @@ export const ui = {
 
   'donate.title': { en: 'Support this initiative', de: 'Unterstütze diese Initiative' },
   'donate.sub': {
-    en: '100% of donations go to project resources: machines, materials and training. Here is what your gift makes possible.',
-    de: '100 % der Spenden fließen in Projektressourcen: Maschinen, Material und Schulungen. Das ermöglicht deine Spende.',
+    en: '100% of donations go to project resources: sewing machines, materials and training.',
+    de: '100 % der Spenden fließen in Projektressourcen: Nähmaschinen, Material und Schulungen.',
   },
   'donate.noLink': {
     en: 'Our donation page for this initiative is launching soon. Until then, write to us and we will tell you how to give.',
